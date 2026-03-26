@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第14屆風險管理基本能力測驗</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: '微軟正黑體', 'Segoe UI', sans-serif; background: #0f172a; color: #e2e8f0; min-height: 100vh; }
+.header { background: linear-gradient(135deg,#1e3a5f,#0f2744); padding: 18px 20px; border-bottom: 1px solid #1e40af44; position: sticky; top: 0; z-index: 100; }
+.hb { font-size: 0.82rem; color: #93c5fd; letter-spacing:.05em; }
+.hb2 { font-size: 0.82rem; color: #94a3b8; margin-top: 2px; }
+.pb-wrap { background: #1e293b; border-radius: 99px; height: 7px; margin-top: 10px; overflow: hidden; }
+.pb { height: 100%; background: linear-gradient(90deg,#3b82f6,#60a5fa); border-radius:99px; transition: width .4s; }
+.pt { font-size:.72rem; color:#64748b; margin-top:4px; display:flex; justify-content:space-between; }
+.main { max-width: 800px; margin: 0 auto; padding: 20px 14px 110px; }
+.nav-dots { display:flex; flex-wrap:wrap; gap:5px; margin-bottom:20px; }
+.nd { width:30px; height:30px; border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:.68rem; font-weight:700; cursor:pointer; border:1.5px solid #334155; background:#0f172a; color:#64748b; transition:all .15s; }
+.nd:hover { border-color:#3b82f6; color:#93c5fd; }
+.nd.ok { background:#14532d44; border-color:#22c55e; color:#86efac; }
+.nd.err { background:#7f1d1d44; border-color:#ef4444; color:#fca5a5; }
+.nd.cur { border-color:#3b82f6; background:#1d4ed822; color:#93c5fd; }
+.qcard { background:#1e293b; border:1px solid #334155; border-radius:14px; padding:22px; margin-bottom:13px; }
+.qh { display:flex; align-items:flex-start; gap:9px; margin-bottom:15px; flex-wrap:wrap; }
+.qn { background:#1d4ed8; color:#fff; font-size:.7rem; font-weight:700; padding:3px 9px; border-radius:5px; white-space:nowrap; margin-top:2px; }
+.qs { background:#164e63; color:#67e8f9; font-size:.68rem; font-weight:600; padding:3px 8px; border-radius:5px; white-space:nowrap; margin-top:2px; }
+.qt { font-size:.9rem; line-height:1.75; flex:1; min-width:200px; }
+.opts { display:flex; flex-direction:column; gap:9px; }
+.opt { display:flex; align-items:flex-start; gap:11px; background:#0f172a; border:1.5px solid #334155; border-radius:9px; padding:11px 14px; cursor:pointer; transition:all .2s; font-size:.86rem; color:#cbd5e1; line-height:1.6; }
+.opt:hover:not(.dis) { border-color:#3b82f6; background:#1e3a5f; color:#fff; }
+.opt.sel { border-color:#3b82f6; background:#1e3a5f; color:#fff; }
+.opt.cor { border-color:#22c55e; background:#14532d22; color:#86efac; }
+.opt.wrg { border-color:#ef4444; background:#7f1d1d22; color:#fca5a5; }
+.opt.shcor { border-color:#22c55e; background:#14532d22; color:#86efac; }
+.opt.dis { cursor:default; }
+.ol { background:#334155; color:#94a3b8; min-width:22px; height:22px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:.72rem; font-weight:700; flex-shrink:0; margin-top:1px; transition:all .2s; }
+.opt.cor .ol { background:#16a34a; color:#fff; }
+.opt.wrg .ol { background:#dc2626; color:#fff; }
+.opt.shcor .ol { background:#16a34a; color:#fff; }
+.opt.sel:not(.cor):not(.wrg) .ol { background:#2563eb; color:#fff; }
+.bot { position:fixed; bottom:0; left:0; right:0; background:#0f172aee; border-top:1px solid #1e293b; backdrop-filter:blur(8px); padding:12px 18px; display:flex; justify-content:space-between; align-items:center; gap:10px; }
+.sd { font-size:.82rem; color:#64748b; }
+.sd span { color:#60a5fa; font-weight:700; }
+.btn { padding:10px 22px; border-radius:8px; font-size:.84rem; font-weight:600; cursor:pointer; border:none; transition:all .2s; }
+.bp { background:linear-gradient(135deg,#2563eb,#1d4ed8); color:#fff; }
+.bp:hover { opacity:.88; }
+.bs { background:#1e293b; color:#94a3b8; border:1px solid #334155; }
+.bs:hover { background:#334155; color:#e2e8f0; }
+.bd { background:linear-gradient(135deg,#7c3aed,#6d28d9); color:#fff; }
+.bd:hover { opacity:.88; }
+.ss { text-align:center; padding:50px 20px; }
+.ss h2 { font-size:1.5rem; font-weight:800; color:#fff; margin-bottom:8px; }
+.ss p { color:#64748b; line-height:1.9; font-size:.88rem; margin-bottom:20px; }
+.tags { display:flex; flex-wrap:wrap; justify-content:center; gap:7px; margin:14px 0 26px; }
+.tag { background:#1e293b; border:1px solid #334155; border-radius:7px; padding:5px 11px; font-size:.76rem; color:#94a3b8; }
+.rs { display:none; text-align:center; padding:40px 20px 80px; }
+.rc { width:120px; height:120px; border-radius:50%; margin:0 auto 18px; display:flex; flex-direction:column; align-items:center; justify-content:center; font-size:1.7rem; font-weight:800; border:4px solid; }
+.rc.pass { border-color:#22c55e; color:#22c55e; background:#14532d22; }
+.rc.fail { border-color:#f59e0b; color:#f59e0b; background:#78350f22; }
+.rsub { font-size:.7rem; margin-top:3px; }
+.rd { display:grid; grid-template-columns:repeat(3,1fr); gap:9px; max-width:420px; margin:18px auto; }
+.rstat { background:#1e293b; border:1px solid #334155; border-radius:10px; padding:13px; }
+.rstat .v { font-size:1.4rem; font-weight:800; color:#60a5fa; }
+.rstat .l { font-size:.7rem; color:#64748b; margin-top:2px; }
+.rev { margin-top:18px; display:none; text-align:left; }
+.rev.show { display:block; }
+</style>
+</head>
+<body>
+
+<div id="ss" class="main ss">
+  <div style="font-size:2.6rem;margin-bottom:12px">📊</div>
+  <h2>台灣金融研訓院</h2>
+  <p>第14屆風險管理基本能力測驗<br>科目：風險管理制度與實務</p>
+  <div class="tags">
+    <div class="tag">📝 共 60 題</div>
+    <div class="tag">第1–40題 每題1.5分</div>
+    <div class="tag">第41–60題 每題2分</div>
+    <div class="tag">💯 滿分100分</div>
+    <div class="tag">🔀 題目與選項全程隨機</div>
+  </div>
+  <button class="btn bp" onclick="startQuiz()" style="font-size:.95rem;padding:12px 36px">開始測驗</button>
+</div>
+
+<div id="qs" style="display:none">
+  <div class="header">
+    <div class="hb">台灣金融研訓院｜第14屆風險管理基本能力測驗</div>
+    <div class="hb2">科目：風險管理制度與實務</div>
+    <div class="pb-wrap"><div class="pb" id="pb" style="width:0%"></div></div>
+    <div class="pt"><span id="pl">已作答 0 / 60 題</span><span id="pr">得分 0 分</span></div>
+  </div>
+  <div class="main">
+    <div class="nav-dots" id="ndots"></div>
+    <div id="qcon"></div>
+  </div>
+  <div class="bot">
+    <div class="sd">已作答 <span id="ba">0</span>/60 題</div>
+    <div style="display:flex;gap:7px">
+      <button class="btn bs" onclick="jumpUnanswered()">跳至未作答</button>
+      <button class="btn bd" onclick="submitQuiz()">交　卷</button>
+    </div>
+  </div>
+</div>
+
+<div id="rs" class="main rs">
+  <div class="rc" id="rc"><div id="rsn"></div><div class="rsub">分</div></div>
+  <div style="font-size:1.2rem;font-weight:700;margin-bottom:5px" id="rt"></div>
+  <div class="rd">
+    <div class="rstat"><div class="v" id="rc2">0</div><div class="l">答對題數</div></div>
+    <div class="rstat"><div class="v" id="rw">0</div><div class="l">答錯題數</div></div>
+    <div class="rstat"><div class="v" id="rb">0</div><div class="l">未作答</div></div>
+  </div>
+  <div style="display:flex;gap:10px;justify-content:center;margin-bottom:24px;flex-wrap:wrap">
+    <button class="btn bs" onclick="toggleReview()">查看解析</button>
+    <button class="btn bp" onclick="restartQuiz()">重新測驗</button>
+  </div>
+  <div class="rev" id="revdiv">
+    <div style="font-size:.9rem;font-weight:700;color:#f1f5f9;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid #1e293b">📋 答題回顧</div>
+    <div id="revcon"></div>
+  </div>
+</div>
+
+<script>
+const QS=[
+  {id:1,p:1,t:"銀行爰用「信用風險值」當作放款權限設置準則時，下列何者屬於無法反映的個別客戶風險？",o:["市場風險","違約風險","暴露風險","回收風險"],a:0},
+  {id:2,p:1,t:"關於風險管理的組織運作方式，下列敘述何者錯誤？",o:["強調風險產生單位與監督單位宜相互隸屬","風險管理的決策過程，涵蓋「從上而下」與「由下往上」兩種","不論哪種風險均應詳細釐清前台、中台及後台的職掌，集中控制、分權營運","業務管理部門須定期評估所有營業單位的營業概況，包括不同業務的收支、利潤與風險承擔"],a:0},
+  {id:3,p:1,t:"有關資產負債管理委員會之權責，下列敘述何者錯誤？",o:["審核全行作業風險的緊急應變計畫","審核流動性管理指標的門檻標準","審核利率風險之避險策略","審核金融同業的拆款額度"],a:0},
+  {id:4,p:1,t:"關於成本中心，下列敘述何者錯誤？",o:["成本中心的主管僅能控制成本或費用","成本中心以追求產品或服務成本最低為其努力目標","成本中心主管無權參與選擇各項投入資源的標準及來源","成本中心適用的單位，「無權決定」產量或服務多寡，以及產量或服務售價"],a:2},
+  {id:5,p:1,t:"轉投資類型的投資中心，宜使用下列何者當作績效衡量指標？",o:["銷售額","內外部損益","資本或股權投資的報酬率","可控制成本"],a:2},
+  {id:6,p:1,t:"經濟移轉價格通常考量下列哪些因子？ A.作業成本 B.與資金來源有關的借款成本 C.與流動性風險有關的流動性貼水 D.與信用風險有關的呆帳準備",o:["僅 B","僅 A、B","僅 B、C、D","A、B、C、D"],a:3},
+  {id:7,p:1,t:"銀行基於規避匯率風險，最好保持每種幣別的資產與負債相同。所謂資產與負債相同，不包括下列何者？",o:["金額大小力求相近","到期日結構力求相近","匯率與利率走勢力求相近","平均期限(Duration)力求相近"],a:2},
+  {id:8,p:1,t:"假設小王購買一張期別 2 年、AA 等級、平價發行的本國債券，該債券的票面價值$100,000 且票面利率為每年 4%，經過一年以後，該債券被信用評等機構調降評等，導致該債券的市場殖利率從原本的 4%上升至 5%，請問該債券遭調降評等，導致市場價值變動多少？",o:["減少$962","減少$952","增加$952","增加$962"],a:1},
+  {id:9,p:1,t:"衡量公司之短期償債能力，下列何者正確？",o:["速動比率＝速動資產／速動負債","速動比率＝（流動資產－預付費用）／速動負債","速動比率＝速動資產／流動負債","速動比率＝流動資產／速動負債"],a:2},
+  {id:10,p:1,t:"關於應收帳款代收融資業務，下列敘述何者錯誤？",o:["係根據企業尚未收妥的應收帳款，提供週轉資金並賺取利息收入","有追索權的應收帳款管理商，得向商品或勞務供應者追討墊付之帳款","無追索權的授信對象為商品或勞務的提供者","銀行可要求應收帳款讓與者額外負擔保險費用，以降低信用風險"],a:2},
+  {id:11,p:1,t:"銀行辦理的短期債務保證，下列哪種項目不屬於此類業務？",o:["記帳稅款","預收定金之返還","預付款之返還","押標金"],a:0},
+  {id:12,p:1,t:"發卡銀行辦理的信用卡業務，主要有三種收入來源，不包含下列何者？",o:["利息收入","國外刷卡之匯差收入","手續費收入","向特約商店收取折扣費用"],a:1},
+  {id:13,p:1,t:"某甲的月收入平均 6 萬元，目前的無擔保債務僅有向乙銀行申辦信用卡，刷卡使用尚有的循環信用餘額 80 萬元。某甲打算再向丙銀行申辦信用貸款，依主管機關規定，請問某甲最高可貸多少金額？",o:["32 萬元","42 萬元","52 萬元","62 萬元"],a:2},
+  {id:14,p:1,t:"依據標準普爾信評公司之評等架構，下列哪些因子會影響營運風險之規模？ A.產業發展前景 B.產品分散程度 C.市場競爭地位 D.管理階層的領導能力",o:["僅 A","僅 B、C","僅 A、B、C","A、B、C、D"],a:3},
+  {id:15,p:1,t:"下列哪項不屬於企業的非公開舉債(Private Debt)？",o:["銀行借款","發行公司債","保單借款","證券金融公司提供的融資"],a:1},
+  {id:16,p:1,t:"銀行依照授信法規，對「所有利害關係人」的擔保授信總餘額，不得超過銀行淨值多少倍數？",o:["1 倍","1.5 倍","2 倍","2.5 倍"],a:1},
+  {id:17,p:1,t:"授信業務的系統性信用風險，不包括哪項影響因素？",o:["產業環境","總體環境","政治及社會因素","個別借款客戶"],a:3},
+  {id:18,p:1,t:"授信資產的配置，重視「報酬率與風險」構成的效率原則，下列哪項內容符合該原則？",o:["追求短期平均成本最低","追求長期生產成本最低","承擔高風險時，要求對應產生高報酬","低風險時，仍要追求高報酬"],a:2},
+  {id:19,p:1,t:"授信客戶的國家別歸屬，實務上採法定歸屬。假設本國 A 銀行之香港分行對位於新加坡之美商Ｂ公司辦理授信，且由 B 公司之美國母公司 C 提供保證。請問該授信客戶的國家別歸屬應為何國？",o:["臺灣","中國","新加坡","美國"],a:3},
+  {id:20,p:1,t:"國家主權評等的信用等級極可能在三個月內調升時，國際信用評等機構會將該國列於下列何者？",o:["正向觀察名單","正向展望","穩定展望","正向調升名單"],a:0},
+  {id:21,p:1,t:"依據 S&P 的國家主權評等，非投資級是指下列何者？",o:["A 等級以下","BBB 等級以下","BB 等級以下","B 等級以下"],a:2},
+  {id:22,p:1,t:"A 銀行在 110 年 12 月底之信用風險加權風險性資產為新臺幣（以下同）1,000 億元，市場風險和作業風險應計提資本各為 5 億元，請問三種風險合計的加權風險性資產為下列何者？",o:["1,000 億元","1,005 億元","1,010 億元","1,125 億元"],a:3},
+  {id:23,p:1,t:"有關槓桿比率，下列敘述何者錯誤？",o:["目的係用來補充以風險衡量為基礎之最低資本要求","槓桿比率之分子為第一類資本淨額","槓桿比率之分母為暴險總額","最低要求的槓桿比率為 6%"],a:3},
+  {id:24,p:1,t:"銀行為提高普通股權益比率，可採用下列哪些措施？ A.現金增資 B.盈餘轉增資 C.不動產重估 D.發行可轉換次順位債券",o:["僅AB","僅CD","僅BCD","ABCD"],a:0},
+  {id:25,p:1,t:"保險業的資本適足率多少時，會被視為資本顯著不足？",o:["最近二期淨值比率均未達百分之三且其中至少一期在百分之二以上","200%以上，未達 250%","150%以上，未達 200%","50%以上，未達 150%；最近二期淨值比率均未達 2%且在 0 以上"],a:3},
+  {id:26,p:1,t:"有關金控公司之敘述，下列何者正確？ A.金控公司對信託子公司持股至少 50%，才具有控制權 B.金控公司對所有非金融相關事業總投資，不得超過金控公司淨值 15% C.金控公司對創業投資子公司的持股，不得超過被投資公司股份總數 10%",o:["僅AB","僅AC","僅BC","ABC"],a:0},
+  {id:27,p:1,t:"實務上，銀行的「債權管理」會發生回收風險，該回收風險不包括下列何者？",o:["擔保品風險","第三人保證的風險","簽訂的法律契約風險","違約機率固定且已知的風險"],a:3},
+  {id:28,p:1,t:"有關信用風險的衡量類型，不包含下列何者？",o:["直接放款風險","或有風險（如承兌）","交割日風險","交割後風險"],a:3},
+  {id:29,p:1,t:"信用風險標準法設定的風險權數，遵循「信用等級越差，權數越高」原則，當授信對象為政府機關時，有關信用等級與適用權數，下列何者錯誤？",o:["AAA 至 AA─，0%","A+至 A─，10%","BBB+至 BBB─，50%","BB+至 B─，100%"],a:1},
+  {id:30,p:1,t:"A 銀行的信用等級為 AAA─，B 銀行的信用等級為 A+，當 B 銀行買入 A 銀行發行之七年期金融債券新臺幣 1 億元時，B 銀行持有此筆金融債券，構成多少信用風險性資產？",o:["1 億元","0.5 億元","0.2 億元","0"],a:2},
+  {id:31,p:1,t:"假設債券部位的投資損失符合常態分配，單尾的容忍水準 2.5%當作損失門檻，殖利率的標準差為 0.5%，敏感性係數為 1 時，下列市場風險值(VaR)的敘述何者正確？",o:["VaR=0－1.96×1×0.005","VaR=0－1.96×1×0.025","VaR=0－1.645×1×0.005","VaR=0－2.325×1×0.005"],a:0},
+  {id:32,p:1,t:"銀行藉由「損失波動幅度」與「波動倍數」的相乘，估算部位何種風險指標？",o:["信用風險值或限額","市場風險值或限額","作業風險值或限額","信用損失的期望值與標準差"],a:1},
+  {id:33,p:1,t:"王先生持有與大盤風險類似的股票組合市值 500 萬元，年報酬的標準差為 20%，假設一年有 250 個交易日，報酬率彼此獨立，且波動同質的常態分配，在單尾容忍水準 5%下，一天的市場風險值(VaR)最接近下列何者？【標準常態值：N(0.95)=1.65，N(0.975)=1.96】",o:["10 萬元","12 萬元","165 萬元","196 萬元"],a:0},
+  {id:34,p:1,t:"銀行「存款準備金」之構成項目中，下列項目何者錯誤？",o:["儲蓄存款","庫存現金","開立在臺灣銀行的「票據交換清算帳戶」存款","開立在央行或受託管理機構之存款準備金甲戶與乙戶之存款"],a:0},
+  {id:35,p:1,t:"下列資產何者的「利率敏感性」最低？",o:["現金","股票","期貨","債券"],a:0},
+  {id:36,p:1,t:"下列哪項「會計科目」屬於負債，不可當作流動準備的資產項目？",o:["金融業互拆淨貸差","金融業互拆淨借差","超額準備","持有政府公債"],a:0},
+  {id:37,p:1,t:"下列何者不是計提作業風險資本需求額的方法？",o:["標準法","風險值法","進階衡量法","基本指標法"],a:1},
+  {id:38,p:1,t:"有關金融機構的作業風險，下列何者非屬主要監督機構？",o:["金管會銀行局","金管會檢查局","中央銀行","內政部警政署"],a:3},
+  {id:39,p:1,t:"主管機關於必要時，得要求銀行提列抗景氣循環的緩衝資本，並以普通股權益第一類資本支應，下列何者為計提比率的限制？",o:["最低不得小於 2%","最高不超過 2%","最高不超過 2.5%","最低不得小於 3%"],a:2},
+  {id:40,p:1,t:"普通股權益之合計數，不包含下列哪種？",o:["庫藏股","預收股本","資本公積","累積盈餘"],a:0},
+  {id:41,p:2,t:"台灣在實施新的資本適足規範後，對於資本風險的衡量，集中在下列哪四大要項上？ A.信用風險 B.市場風險 C.價格風險 D.作業風險 E.流動性風險",o:["ABCD","ABCE","ABDE","BCDE"],a:2},
+  {id:42,p:2,t:"銀行根據風險胃納、策略及管理所需建立之損失機率範圍，進一步計算非預期損失的資本需求額，名稱為下列何者？",o:["法定資本","經濟資本","已投入資本","緩衝資本"],a:1},
+  {id:43,p:2,t:"有關作業基礎成本制度(Activity-Based Costing, ABC)，下列敘述何者正確？",o:["金融服務業面對的是人的交易行為，人的慣性行為使得「標準」作業很容易設定","ABC 制度的各項作業成本，是由作業動因的作業量除以「動因費率」計算而得","ABC 制度的作業成本，不須納入每項作業的「風險成本」","ABC 成本制度的特色之一，在於能夠區分個別業務及客戶的績效差異"],a:3},
+  {id:44,p:2,t:"A 銀行目前提供客戶約 1%的存款利率，而對客戶的貸款利率為 2.5%，若該行存放比率為 80%。請問該行每吸收 1,000 萬元存款後將其貸出時，在不考慮相關成本下，可獲得多少利潤？",o:["25 萬元","15 萬元","12 萬元","10 萬元"],a:2},
+  {id:45,p:2,t:"銀行對外舉借期限一年、年利率 1%的債務，支應兩年、年報酬率 2%的資產，第一年結束，銀行在該年有利息利潤還是利息損失？原來債務一年後到期，需要重新舉債，隱含再融資風險，如果第二年新債務的年利率為 3%，第二年產生利息利潤還是利息損失？",o:["第一年：1%利息利潤，第二年：1%利息損失","第一年：1%利息損失，第二年：1%利息利潤","第一年：1%利息利潤，第二年：2%利息損失","第一年：1%利息損失，第二年：2%利息利潤"],a:0},
+  {id:46,p:2,t:"在授信契約的保障條款中，下列何者不屬於正向條款？",o:["借戶須定期陳送財務報表","借戶未獲得債權銀行同意，不得發行新債","借戶的利息保障倍數須大於 3","借戶的資產報酬率須大於 5%"],a:1},
+  {id:47,p:2,t:"若客戶的住宅狀況有下列四種：A.為本人或配偶的房屋，且該房屋設定抵押權予本行、B.為本人或配偶的房屋，且該房屋設定抵押權予他人、C.為本人或配偶的房屋，且該房屋未設定他項權利、D.房屋為家族所有。銀行辦理消費性放款的信用評分時，請問評分由高至低依序為何？",o:["ABCD","DABC","CABD","CBAD"],a:2},
+  {id:48,p:2,t:"張先生以市價 1,200 萬的房屋向 A 銀行貸款，A 銀行核予之貸放成數為 75%後，張先生再向 T 銀行申請二胎房貸，T 銀行依其風險容忍度以第一順位質權設定金額的 15%核予張先生二胎房貸，請問張先生可由 A 銀行及 T 銀行獲得的總貸款金額為多少？（依一般實務慣例，第一順位銀行通常會以貸放金額的 1.2 倍設定質權）",o:["960 萬","1,062 萬","1,080 萬","1,200 萬"],a:1},
+  {id:49,p:2,t:"有關受評公司資本結構之長期償債能力，下列何者不宜當作主要衡量指標？",o:["長短期借款／總資產","（長短期借款+或有負債)／（長短期借款+或有負債+股東權益）","資產重估增值（不包括無形資產）","比率值愈小，財務風險愈低"],a:2},
+  {id:50,p:2,t:"有關 Moody's 信評機構對公司債定量分析之敘述，下列何者錯誤？",o:["主要指標是利息保障倍數","流動與速動比率：比率值愈高，財務風險愈大","負債比率：比率值愈高，財務風險愈大","財務槓桿比率：比率值愈高，長期償債能力愈差"],a:1},
+  {id:51,p:2,t:"為有效控制國家風險，避免外幣債權之風險過度集中在同等級或低等級之風險國家，主管機關要求銀行逐日統計並定期提報董事會，相關說明何者正確？ A.授信業務按目前放款餘額計算暴險值 B.投資業務分成股權投資、有價證券投資及外匯交易三種，其中股權投資按交割前名目本金計算暴險值 C.對國外銀行之資金拆放、同業進出口融資墊款等，按使用餘額計算暴險值",o:["僅AB","僅AC","僅BC","ABC"],a:1},
+  {id:52,p:2,t:"臺灣的主管機關對於資本等級不同的銀行，規範的業務項目跟著不同，下列敘述何者錯誤？",o:["資本適足等級之銀行，可辦理「財富管理」業務","資本適足等級之銀行，資本適足率依規定加計，可轉投資「非金融」相關事業","銀行呈現資本不足時，主管機關便得「限制或禁止」其與利害關係人之授信或其他交易","銀行的資本等級屬於資本不足、顯著不足或嚴重不足時，主管機關可命令銀行或其負責人在期限內，提出資本重建或其他財務業務改善計畫"],a:2},
+  {id:53,p:2,t:"依銀行流動性覆蓋比率實施標準，有關流動性覆蓋比率，下列敘述何者錯誤？",o:["自 108 年起不得低於 100%","輸出入銀行、外國銀行在臺分行，不適用本標準","指合格高品質流動性資產總額除以未來 60 個日曆日之淨現金流出總額","銀行應按月計算並申報流動性覆蓋比率"],a:2},
+  {id:54,p:2,t:"有關違約、違約風險及違約事件，下列敘述何者錯誤？",o:["違約風險係由違約事件的發生機率加以描述","交易對手未遵守契約規定之違約，屬於技術性違約","逾期放款係指屆清償期達六個月以上，仍無法繳交本金或利息者","經濟違約，係指授信客戶總資產市值低於總負債市值"],a:2},
+  {id:55,p:2,t:"有關信用風險的類型與暴露風險，下列敘述何者錯誤？",o:["土建融案件之擔保品風險使用擔保成數衡量，亦即實際貸款額佔可貸值的比率(Loan-to-Value)，擔保成數越高，銀行債權保障越低","授信客戶未依還款計畫逕自提前還款，構成「提前還款風險」(Prepayment Risk)，性質類似「再投資風險」","衍生性業務之「當期暴險額」，反映目前的暴露風險，有別於反映未來可能存在風險之「潛在暴險額」","信用額度內未被動用之授信資產，稱為「放款承諾」，此項承諾使銀行承擔或有之「再投資風險」"],a:3},
+  {id:56,p:2,t:"某銀行承做兩筆衍生性金融交易，其一為名目本金$200,000，期別 5 年的利率交換契約，計算權數為 0.005，當期暴險額為$5,000。另一筆為名目本金$100,000，期別 3 年的外匯交換契約，計算權數為 0.05，當期暴險額為$3,000，請問該銀行的信用相當額為何？",o:["3,000 元","6,000 元","7,000 元","14,000 元"],a:3},
+  {id:57,p:2,t:"不論單一金融商品、組合部位或全行資產負債觀點，衡量「市場風險」最常見的市場因素不包括下列何者？",o:["利率","匯率","生產要素成本","非生產要素的固定成本"],a:3},
+  {id:58,p:2,t:"有關市場風險標準法與內部模型法，下列敘述何者錯誤？",o:["標準法在正常情形，可使市場風險之門檻設計及風險配置更加精緻","銀行可使用內部模型法，計算各部位之市場風險值與資本計提額","常理上，內部模型法在風險衡量精細程度優於標準法，計提的資本需求額也較標準法少","銀行可使用標準法計算各部位之市場風險限額與資本計提額"],a:0},
+  {id:59,p:2,t:"有關利率風險管理與重新訂價缺口模型，預期利率上升時，銀行應該如何因應？",o:["增加利率敏感性負債","減少匯率敏感性負債","增加利率敏感性資產","減少利率敏感性資產"],a:2},
+  {id:60,p:2,t:"根據 2022 年起的法規，銀行的資本等級被劃分為「資本顯著不足」，表示此銀行：",o:["資本適足比率達 2%以上，但未達 8.5%","資本適足比率未達 2%","資本適足比率達 9%","資本適足比率達 10%"],a:0}
+];
+
+let sqList=[],ua={},so={},ansCount=0,sub=false;
+function shuf(a){const r=[...a];for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]];}return r;}
+
+function startQuiz(){
+  document.getElementById('ss').style.display='none';
+  document.getElementById('qs').style.display='block';
+  document.getElementById('rs').style.display='none';
+  sqList=shuf([...Array(60).keys()]).map(i=>QS[i]);
+  so={};ua={};ansCount=0;sub=false;
+  sqList.forEach((_,qi)=>{so[qi]=shuf([0,1,2,3]);});
+  buildNav();buildQs();
+  window.scrollTo(0,0);
+}
+
+function buildNav(){
+  const c=document.getElementById('ndots');c.innerHTML='';
+  sqList.forEach((_,qi)=>{
+    const d=document.createElement('div');
+    d.className='nd';d.id='nd'+qi;d.textContent=qi+1;
+    d.onclick=()=>document.getElementById('q'+qi).scrollIntoView({behavior:'smooth',block:'center'});
+    c.appendChild(d);
+  });
+}
+
+function buildQs(){
+  const c=document.getElementById('qcon');c.innerHTML='';
+  const lb=['(1)','(2)','(3)','(4)'];
+  sqList.forEach((q,qi)=>{
+    const sc=q.p===1?'1.5分':'2分';const pt=q.p===1?'第一部分':'第二部分';
+    let oh='';
+    so[qi].forEach((oi,ni)=>{
+      oh+=`<div class="opt" id="o${qi}_${ni}" onclick="pick(${qi},${ni})"><div class="ol">${lb[ni]}</div><div>${q.o[oi]}</div></div>`;
+    });
+    const card=document.createElement('div');
+    card.className='qcard';card.id='q'+qi;
+    card.innerHTML=`<div class="qh"><div class="qn">第 ${qi+1} 題</div><div class="qs">${pt}｜${sc}</div><div class="qt">${q.t}</div></div><div class="opts">${oh}</div>`;
+    c.appendChild(card);
+  });
+}
+
+function pick(qi,ni){
+  if(sub)return;
+  const was=ua[qi]!==undefined;
+  if(was)document.getElementById('o'+qi+'_'+ua[qi]).classList.remove('sel');
+  else ansCount++;
+  ua[qi]=ni;
+  document.getElementById('o'+qi+'_'+ni).classList.add('sel');
+  document.getElementById('nd'+qi).classList.add('cur');
+  upd();
+}
+
+function upd(){
+  const p=(ansCount/60*100).toFixed(0);
+  document.getElementById('pb').style.width=p+'%';
+  document.getElementById('pl').textContent=`已作答 ${ansCount} / 60 題`;
+  document.getElementById('ba').textContent=ansCount;
+}
+
+function jumpUnanswered(){
+  for(let i=0;i<60;i++){if(ua[i]===undefined){document.getElementById('q'+i).scrollIntoView({behavior:'smooth',block:'center'});return;}}
+  alert('所有題目已作答！可以交卷了。');
+}
+
+function calcScore(){
+  let tot=0,cor=0,wrg=0,blk=0;
+  sqList.forEach((q,qi)=>{
+    const pts=q.p===1?1.5:2;
+    if(ua[qi]===undefined)blk++;
+    else if(so[qi][ua[qi]]===q.a){tot+=pts;cor++;}
+    else wrg++;
+  });
+  return{tot,cor,wrg,blk};
+}
+
+function submitQuiz(){
+  const un=60-ansCount;
+  if(un>0){if(!confirm(`您還有 ${un} 題未作答，確定要交卷嗎？`))return;}
+  else if(!confirm('確定要交卷嗎？'))return;
+  sub=true;
+  sqList.forEach((q,qi)=>{
+    const cni=so[qi].indexOf(q.a);
+    for(let ni=0;ni<4;ni++)document.getElementById('o'+qi+'_'+ni).classList.add('dis');
+    if(ua[qi]!==undefined){
+      const chn=ua[qi];
+      if(so[qi][chn]===q.a){
+        const el=document.getElementById('o'+qi+'_'+chn);el.classList.remove('sel');el.classList.add('cor');
+        document.getElementById('nd'+qi).className='nd ok';
+      } else {
+        const el=document.getElementById('o'+qi+'_'+chn);el.classList.remove('sel');el.classList.add('wrg');
+        document.getElementById('o'+qi+'_'+cni).classList.add('shcor');
+        document.getElementById('nd'+qi).className='nd err';
+      }
+    } else {
+      document.getElementById('o'+qi+'_'+cni).classList.add('shcor');
+      document.getElementById('nd'+qi).className='nd err';
+    }
+  });
+  const r=calcScore();
+  document.getElementById('pr').textContent=`得分 ${r.tot.toFixed(1)} 分`;
+  setTimeout(()=>{
+    document.getElementById('qs').style.display='none';
+    const rsel=document.getElementById('rs');rsel.style.display='block';
+    document.getElementById('rsn').textContent=r.tot.toFixed(1);
+    const passed=r.tot>=60;
+    document.getElementById('rc').className='rc '+(passed?'pass':'fail');
+    document.getElementById('rt').textContent=passed?'🎉 恭喜通過測驗！':'📚 繼續加油！';
+    document.getElementById('rc2').textContent=r.cor;
+    document.getElementById('rw').textContent=r.wrg;
+    document.getElementById('rb').textContent=r.blk;
+    window.scrollTo(0,0);
+  },400);
+}
+
+function toggleReview(){
+  const d=document.getElementById('revdiv');
+  if(d.classList.contains('show')){d.classList.remove('show');return;}
+  d.classList.add('show');
+  const c=document.getElementById('revcon');c.innerHTML='';
+  const lb=['(1)','(2)','(3)','(4)'];
+  sqList.forEach((q,qi)=>{
+    const cni=so[qi].indexOf(q.a);
+    const chn=ua[qi];
+    const pts=q.p===1?1.5:2;
+    let st='⬜ 未作答',stc='#94a3b8';
+    if(chn!==undefined){if(so[qi][chn]===q.a){st='✅ 正確';stc='#22c55e';}else{st='❌ 錯誤';stc='#ef4444';}}
+    let oh=so[qi].map((oi,ni)=>{
+      let s='color:#64748b',m='';
+      if(ni===cni){s='color:#86efac;font-weight:600';m=' ✓';}
+      if(ni===chn&&so[qi][chn]!==q.a){s='color:#fca5a5;text-decoration:line-through';m=' ✗';}
+      return`<div style="${s};font-size:.82rem;margin:3px 0">${lb[ni]} ${q.o[oi]}${m}</div>`;
+    }).join('');
+    const card=document.createElement('div');
+    card.style.cssText='background:#1e293b;border:1px solid #334155;border-radius:11px;padding:14px;margin-bottom:10px';
+    card.innerHTML=`<div style="display:flex;gap:6px;align-items:flex-start;margin-bottom:9px;flex-wrap:wrap"><span style="background:#1d4ed8;color:#fff;padding:2px 7px;border-radius:4px;font-size:.67rem;font-weight:700">第${qi+1}題（原第${q.id}題）</span><span style="background:#0f172a;color:#67e8f9;font-size:.67rem;padding:2px 6px;border-radius:4px">${pts}分</span><span style="background:#0f172a;font-size:.68rem;padding:2px 6px;border-radius:4px;color:${stc}">${st}</span><div style="font-size:.87rem;color:#e2e8f0;flex:1;line-height:1.65;min-width:180px">${q.t}</div></div>${oh}`;
+    c.appendChild(card);
+  });
+}
+
+function restartQuiz(){
+  document.getElementById('revdiv').classList.remove('show');
+  startQuiz();
+}
+</script>
+</body>
+</html>
