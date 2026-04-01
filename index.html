@@ -5,122 +5,191 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>第14屆風險管理基本能力測驗</title>
 <style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: '微軟正黑體', 'Segoe UI', sans-serif; background: #0f172a; color: #e2e8f0; min-height: 100vh; }
-.header { background: linear-gradient(135deg,#1e3a5f,#0f2744); padding: 18px 20px; border-bottom: 1px solid #1e40af44; position: sticky; top: 0; z-index: 100; }
-.hb { font-size: 0.82rem; color: #93c5fd; letter-spacing:.05em; }
-.hb2 { font-size: 0.82rem; color: #94a3b8; margin-top: 2px; }
-.pb-wrap { background: #1e293b; border-radius: 99px; height: 7px; margin-top: 10px; overflow: hidden; }
-.pb { height: 100%; background: linear-gradient(90deg,#3b82f6,#60a5fa); border-radius:99px; transition: width .4s; }
-.pt { font-size:.72rem; color:#64748b; margin-top:4px; display:flex; justify-content:space-between; }
-.main { max-width: 800px; margin: 0 auto; padding: 20px 14px 110px; }
-.nav-dots { display:flex; flex-wrap:wrap; gap:5px; margin-bottom:20px; }
-.nd { width:30px; height:30px; border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:.68rem; font-weight:700; cursor:pointer; border:1.5px solid #334155; background:#0f172a; color:#64748b; transition:all .15s; }
-.nd:hover { border-color:#3b82f6; color:#93c5fd; }
-.nd.ok { background:#14532d44; border-color:#22c55e; color:#86efac; }
-.nd.err { background:#7f1d1d44; border-color:#ef4444; color:#fca5a5; }
-.nd.cur { border-color:#3b82f6; background:#1d4ed822; color:#93c5fd; }
-.qcard { background:#1e293b; border:1px solid #334155; border-radius:14px; padding:22px; margin-bottom:13px; }
-.qh { display:flex; align-items:flex-start; gap:9px; margin-bottom:15px; flex-wrap:wrap; }
-.qn { background:#1d4ed8; color:#fff; font-size:.7rem; font-weight:700; padding:3px 9px; border-radius:5px; white-space:nowrap; margin-top:2px; }
-.qs { background:#164e63; color:#67e8f9; font-size:.68rem; font-weight:600; padding:3px 8px; border-radius:5px; white-space:nowrap; margin-top:2px; }
-.qt { font-size:.9rem; line-height:1.75; flex:1; min-width:200px; }
-.opts { display:flex; flex-direction:column; gap:9px; }
-.opt { display:flex; align-items:flex-start; gap:11px; background:#0f172a; border:1.5px solid #334155; border-radius:9px; padding:11px 14px; cursor:pointer; transition:all .2s; font-size:.86rem; color:#cbd5e1; line-height:1.6; }
-.opt:hover:not(.dis) { border-color:#3b82f6; background:#1e3a5f; color:#fff; }
-.opt.sel { border-color:#3b82f6; background:#1e3a5f; color:#fff; }
-.opt.cor { border-color:#22c55e; background:#14532d22; color:#86efac; }
-.opt.wrg { border-color:#ef4444; background:#7f1d1d22; color:#fca5a5; }
-.opt.shcor { border-color:#22c55e; background:#14532d22; color:#86efac; }
-.opt.dis { cursor:default; }
-.ol { background:#334155; color:#94a3b8; min-width:22px; height:22px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:.72rem; font-weight:700; flex-shrink:0; margin-top:1px; transition:all .2s; }
-.opt.cor .ol { background:#16a34a; color:#fff; }
-.opt.wrg .ol { background:#dc2626; color:#fff; }
-.opt.shcor .ol { background:#16a34a; color:#fff; }
-.opt.sel:not(.cor):not(.wrg) .ol { background:#2563eb; color:#fff; }
-.bot { position:fixed; bottom:0; left:0; right:0; background:#0f172aee; border-top:1px solid #1e293b; backdrop-filter:blur(8px); padding:12px 18px; display:flex; justify-content:space-between; align-items:center; gap:10px; }
-.sd { font-size:.82rem; color:#64748b; }
-.sd span { color:#60a5fa; font-weight:700; }
-.btn { padding:10px 22px; border-radius:8px; font-size:.84rem; font-weight:600; cursor:pointer; border:none; transition:all .2s; }
-.bp { background:linear-gradient(135deg,#2563eb,#1d4ed8); color:#fff; }
-.bp:hover { opacity:.88; }
-.bs { background:#1e293b; color:#94a3b8; border:1px solid #334155; }
-.bs:hover { background:#334155; color:#e2e8f0; }
-.bd { background:linear-gradient(135deg,#7c3aed,#6d28d9); color:#fff; }
-.bd:hover { opacity:.88; }
-.ss { text-align:center; padding:50px 20px; }
-.ss h2 { font-size:1.5rem; font-weight:800; color:#fff; margin-bottom:8px; }
-.ss p { color:#64748b; line-height:1.9; font-size:.88rem; margin-bottom:20px; }
-.tags { display:flex; flex-wrap:wrap; justify-content:center; gap:7px; margin:14px 0 26px; }
-.tag { background:#1e293b; border:1px solid #334155; border-radius:7px; padding:5px 11px; font-size:.76rem; color:#94a3b8; }
-.rs { display:none; text-align:center; padding:40px 20px 80px; }
-.rc { width:120px; height:120px; border-radius:50%; margin:0 auto 18px; display:flex; flex-direction:column; align-items:center; justify-content:center; font-size:1.7rem; font-weight:800; border:4px solid; }
-.rc.pass { border-color:#22c55e; color:#22c55e; background:#14532d22; }
-.rc.fail { border-color:#f59e0b; color:#f59e0b; background:#78350f22; }
-.rsub { font-size:.7rem; margin-top:3px; }
-.rd { display:grid; grid-template-columns:repeat(3,1fr); gap:9px; max-width:420px; margin:18px auto; }
-.rstat { background:#1e293b; border:1px solid #334155; border-radius:10px; padding:13px; }
-.rstat .v { font-size:1.4rem; font-weight:800; color:#60a5fa; }
-.rstat .l { font-size:.7rem; color:#64748b; margin-top:2px; }
-.rev { margin-top:18px; display:none; text-align:left; }
-.rev.show { display:block; }
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'微軟正黑體','Segoe UI',sans-serif;background:#0f172a;color:#e2e8f0;min-height:100vh;}
+.header{background:linear-gradient(135deg,#1e3a5f,#0f2744);padding:16px 20px;border-bottom:1px solid #1e40af44;position:sticky;top:0;z-index:100;}
+.hb{font-size:.8rem;color:#93c5fd;letter-spacing:.04em;}
+.hb2{font-size:.76rem;color:#64748b;margin-top:1px;}
+.pb-wrap{background:#1e293b;border-radius:99px;height:6px;margin-top:9px;overflow:hidden;}
+.pb{height:100%;background:linear-gradient(90deg,#3b82f6,#60a5fa);border-radius:99px;transition:width .4s;}
+.pt{font-size:.7rem;color:#64748b;margin-top:4px;display:flex;justify-content:space-between;}
+.main{max-width:800px;margin:0 auto;padding:20px 14px 120px;}
+/* START */
+.ss{text-align:center;padding:44px 20px;}
+.ss h2{font-size:1.5rem;font-weight:800;color:#fff;margin-bottom:6px;}
+.ss p{color:#64748b;line-height:1.9;font-size:.88rem;margin-bottom:16px;}
+.tags{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin:12px 0 22px;}
+.tag{background:#1e293b;border:1px solid #334155;border-radius:7px;padding:5px 11px;font-size:.74rem;color:#94a3b8;}
+.mode-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:11px;max-width:600px;margin:0 auto 24px;}
+.mcard{background:#1e293b;border:1.5px solid #334155;border-radius:14px;padding:20px 15px;cursor:pointer;transition:all .2s;text-align:center;}
+.mcard:hover{border-color:#3b82f6;background:#1e3a5f;}
+.mcard.dim{opacity:.38;cursor:not-allowed;pointer-events:none;}
+.mcard .mi{font-size:2rem;margin-bottom:8px;}
+.mcard .mt{font-size:.9rem;font-weight:700;color:#f1f5f9;margin-bottom:4px;}
+.mcard .md{font-size:.73rem;color:#64748b;line-height:1.5;}
+.mcard.sc{border-color:#f59e0b44;}.mcard.sc:hover{border-color:#f59e0b;background:#78350f22;}
+/* NAV */
+.nav-dots{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:18px;}
+.nd{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:.63rem;font-weight:700;cursor:pointer;border:1.5px solid #334155;background:#0f172a;color:#64748b;transition:all .15s;position:relative;}
+.nd:hover{border-color:#3b82f6;color:#93c5fd;}
+.nd.ok{background:#14532d44;border-color:#22c55e;color:#86efac;}
+.nd.err{background:#7f1d1d44;border-color:#ef4444;color:#fca5a5;}
+.sd-dot{position:absolute;top:-3px;right:-3px;font-size:.48rem;line-height:1;}
+/* QCARD */
+.qcard{background:#1e293b;border:1.5px solid #334155;border-radius:14px;padding:20px 18px 16px;margin-bottom:12px;transition:border-color .25s;}
+.qcard.aok{border-color:#22c55e55;}
+.qcard.aerr{border-color:#ef444455;}
+.qh{display:flex;align-items:flex-start;gap:8px;margin-bottom:13px;flex-wrap:wrap;}
+.qn{background:#1d4ed8;color:#fff;font-size:.67rem;font-weight:700;padding:3px 9px;border-radius:5px;white-space:nowrap;margin-top:2px;}
+.qpt{background:#164e63;color:#67e8f9;font-size:.65rem;font-weight:600;padding:3px 8px;border-radius:5px;white-space:nowrap;margin-top:2px;}
+.qt{font-size:.9rem;line-height:1.75;flex:1;min-width:180px;}
+.sbtn{background:none;border:none;cursor:pointer;font-size:1.05rem;padding:1px 3px;margin-top:1px;flex-shrink:0;opacity:.3;transition:opacity .2s,transform .2s;}
+.sbtn:hover{opacity:.75;}
+.sbtn.on{opacity:1;transform:scale(1.2);}
+/* OPTIONS */
+.opts{display:flex;flex-direction:column;gap:8px;}
+.opt{display:flex;align-items:flex-start;gap:10px;background:#0f172a;border:1.5px solid #334155;border-radius:9px;padding:11px 13px;cursor:pointer;transition:all .18s;font-size:.86rem;color:#cbd5e1;line-height:1.6;}
+.opt:hover:not(.dis){border-color:#3b82f6;background:#1e3a5f;color:#fff;}
+.opt.cor{border-color:#22c55e;background:#14532d22;color:#86efac;}
+.opt.wrg{border-color:#ef4444;background:#7f1d1d22;color:#fca5a5;}
+.opt.shcor{border-color:#22c55e;background:#14532d22;color:#86efac;}
+.opt.dis{cursor:default;}
+.ol{background:#334155;color:#94a3b8;min-width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;flex-shrink:0;margin-top:2px;transition:all .18s;}
+.opt.cor .ol{background:#16a34a;color:#fff;}
+.opt.wrg .ol{background:#dc2626;color:#fff;}
+.opt.shcor .ol{background:#16a34a;color:#fff;}
+/* FEEDBACK BANNER */
+.fb{display:none;margin-top:11px;padding:9px 13px;border-radius:8px;font-size:.82rem;font-weight:600;align-items:center;gap:7px;}
+.fb.show{display:flex;}
+.fb.fok{background:#14532d33;border:1px solid #22c55e55;color:#86efac;}
+.fb.ferr{background:#7f1d1d33;border:1px solid #ef444455;color:#fca5a5;}
+/* SECTION DIVIDER */
+.sdiv{display:flex;align-items:center;gap:10px;margin:18px 0 13px;}
+.sdiv span{font-size:.73rem;font-weight:700;color:#3b82f6;white-space:nowrap;}
+.sdiv::before,.sdiv::after{content:'';flex:1;height:1px;background:#1e293b;}
+/* BOTTOM BAR */
+.bot{position:fixed;bottom:0;left:0;right:0;background:#0f172aee;border-top:1px solid #1e293b;backdrop-filter:blur(8px);padding:10px 14px;display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;}
+.sd{font-size:.75rem;color:#64748b;}
+.sd b{color:#60a5fa;}
+.btnrow{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;}
+.btn{padding:8px 15px;border-radius:8px;font-size:.8rem;font-weight:600;cursor:pointer;border:none;transition:all .2s;}
+.bp{background:linear-gradient(135deg,#2563eb,#1d4ed8);color:#fff;}
+.bp:hover{opacity:.88;}
+.bs{background:#1e293b;color:#94a3b8;border:1px solid #334155;}
+.bs:hover{background:#334155;color:#e2e8f0;}
+.bd{background:linear-gradient(135deg,#7c3aed,#6d28d9);color:#fff;}
+.bd:hover{opacity:.88;}
+.bst{background:linear-gradient(135deg,#d97706,#b45309);color:#fff;}
+.bst:hover{opacity:.88;}
+/* RESULT */
+.rs{display:none;text-align:center;padding:36px 20px 100px;}
+.rc{width:115px;height:115px;border-radius:50%;margin:0 auto 15px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:1.55rem;font-weight:800;border:4px solid;}
+.rc.pass{border-color:#22c55e;color:#22c55e;background:#14532d22;}
+.rc.fail{border-color:#f59e0b;color:#f59e0b;background:#78350f22;}
+.rsub{font-size:.66rem;margin-top:2px;}
+.rd{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;max-width:380px;margin:14px auto;}
+.rstat{background:#1e293b;border:1px solid #334155;border-radius:10px;padding:12px;}
+.rstat .v{font-size:1.3rem;font-weight:800;color:#60a5fa;}
+.rstat .l{font-size:.68rem;color:#64748b;margin-top:2px;}
+.rbrow{display:flex;gap:9px;justify-content:center;margin:16px 0 20px;flex-wrap:wrap;}
+/* REVIEW */
+.rev{margin-top:14px;display:none;text-align:left;}
+.rev.show{display:block;}
+.revt{font-size:.86rem;font-weight:700;color:#f1f5f9;margin-bottom:11px;padding-bottom:7px;border-bottom:1px solid #1e293b;}
+.rcard{background:#1e293b;border:1px solid #334155;border-radius:11px;padding:13px;margin-bottom:9px;}
+.rch{display:flex;gap:6px;align-items:flex-start;margin-bottom:8px;flex-wrap:wrap;}
+/* TOAST */
+.toast{position:fixed;top:76px;left:50%;transform:translateX(-50%) translateY(-16px);background:#1e293b;border:1px solid #475569;border-radius:9px;padding:9px 17px;font-size:.8rem;color:#e2e8f0;z-index:999;opacity:0;transition:all .28s;pointer-events:none;white-space:nowrap;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+/* MODE BADGE */
+.mbadge{display:inline-flex;align-items:center;gap:5px;border-radius:7px;padding:4px 10px;font-size:.73rem;margin-bottom:13px;}
+.mbadge.star{background:#78350f44;border:1px solid #f59e0b55;color:#fbbf24;}
+.mbadge.retry{background:#1d4ed822;border:1px solid #3b82f655;color:#93c5fd;}
 </style>
 </head>
 <body>
 
+<div class="toast" id="toast"></div>
+
+<!-- ════════════════ START ════════════════ -->
 <div id="ss" class="main ss">
-  <div style="font-size:2.6rem;margin-bottom:12px">📊</div>
+  <div style="font-size:2.4rem;margin-bottom:10px">📊</div>
   <h2>台灣金融研訓院</h2>
   <p>第14屆風險管理基本能力測驗<br>科目：風險管理制度與實務</p>
   <div class="tags">
-    <div class="tag">📝 共 60 題</div>
+    <div class="tag">📝 共60題</div>
     <div class="tag">第1–40題 每題1.5分</div>
     <div class="tag">第41–60題 每題2分</div>
     <div class="tag">💯 滿分100分</div>
-    <div class="tag">🔀 題目與選項全程隨機</div>
+    <div class="tag">🔀 題目選項隨機</div>
+    <div class="tag">⚡ 即時對錯回饋</div>
   </div>
-  <button class="btn bp" onclick="startQuiz()" style="font-size:.95rem;padding:12px 36px">開始測驗</button>
+  <div class="mode-cards">
+    <div class="mcard" onclick="startMode('all')">
+      <div class="mi">📋</div>
+      <div class="mt">完整測驗</div>
+      <div class="md">隨機排列全部60題<br>計分、即時回饋</div>
+    </div>
+    <div class="mcard dim" id="retry-card" onclick="startMode('retry')">
+      <div class="mi">🔁</div>
+      <div class="mt">重練錯題</div>
+      <div class="md" id="retry-desc">完成測驗後解鎖<br>專攻上次錯誤題目</div>
+    </div>
+    <div class="mcard sc dim" id="star-card" onclick="startMode('star')">
+      <div class="mi">⭐</div>
+      <div class="mt">星號題練習</div>
+      <div class="md" id="star-desc">測驗中標記星號<br>集中練習重點題</div>
+    </div>
+  </div>
+  <div style="font-size:.71rem;color:#475569">⭐ 星號與錯題紀錄儲存於本機，重新整理後仍保留</div>
 </div>
 
+<!-- ════════════════ QUIZ ════════════════ -->
 <div id="qs" style="display:none">
   <div class="header">
     <div class="hb">台灣金融研訓院｜第14屆風險管理基本能力測驗</div>
-    <div class="hb2">科目：風險管理制度與實務</div>
+    <div class="hb2" id="mode-lbl">科目：風險管理制度與實務</div>
     <div class="pb-wrap"><div class="pb" id="pb" style="width:0%"></div></div>
-    <div class="pt"><span id="pl">已作答 0 / 60 題</span><span id="pr">得分 0 分</span></div>
+    <div class="pt"><span id="pl">已作答 0 題</span><span id="pr">得分 0 分</span></div>
   </div>
   <div class="main">
+    <div id="badge-area"></div>
     <div class="nav-dots" id="ndots"></div>
     <div id="qcon"></div>
   </div>
   <div class="bot">
-    <div class="sd">已作答 <span id="ba">0</span>/60 題</div>
-    <div style="display:flex;gap:7px">
-      <button class="btn bs" onclick="jumpUnanswered()">跳至未作答</button>
-      <button class="btn bd" onclick="submitQuiz()">交　卷</button>
+    <div class="sd">已答 <b id="ba">0</b>/<b id="btot">60</b>&ensp;✅<b id="bco">0</b> ❌<b id="ber">0</b></div>
+    <div class="btnrow">
+      <button class="btn bs" onclick="jumpUnanswered()">未答↓</button>
+      <button class="btn bst" onclick="jumpStarred()">⭐跳星號</button>
+      <button class="btn bd" onclick="finishQuiz()">結束測驗</button>
     </div>
   </div>
 </div>
 
+<!-- ════════════════ RESULT ════════════════ -->
 <div id="rs" class="main rs">
-  <div class="rc" id="rc"><div id="rsn"></div><div class="rsub">分</div></div>
-  <div style="font-size:1.2rem;font-weight:700;margin-bottom:5px" id="rt"></div>
+  <div class="rc" id="rc"><div id="rsn"></div><div class="rsub" id="rsub">分</div></div>
+  <div style="font-size:1.12rem;font-weight:700;margin-bottom:4px" id="rt"></div>
+  <div style="font-size:.76rem;color:#64748b;margin-bottom:12px" id="rlbl"></div>
   <div class="rd">
-    <div class="rstat"><div class="v" id="rc2">0</div><div class="l">答對題數</div></div>
-    <div class="rstat"><div class="v" id="rw">0</div><div class="l">答錯題數</div></div>
+    <div class="rstat"><div class="v" id="rc2">0</div><div class="l">答對</div></div>
+    <div class="rstat"><div class="v" id="rw">0</div><div class="l">答錯</div></div>
     <div class="rstat"><div class="v" id="rb">0</div><div class="l">未作答</div></div>
   </div>
-  <div style="display:flex;gap:10px;justify-content:center;margin-bottom:24px;flex-wrap:wrap">
-    <button class="btn bs" onclick="toggleReview()">查看解析</button>
-    <button class="btn bp" onclick="restartQuiz()">重新測驗</button>
+  <div class="rbrow">
+    <button class="btn bs" onclick="toggleReview()">📋 查看解析</button>
+    <button class="btn bp" onclick="goHome()">🏠 回首頁</button>
+    <button class="btn bd" id="retry-btn" onclick="startMode('retry')" style="display:none">🔁 重練錯題</button>
   </div>
   <div class="rev" id="revdiv">
-    <div style="font-size:.9rem;font-weight:700;color:#f1f5f9;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid #1e293b">📋 答題回顧</div>
+    <div class="revt">📋 答題回顧</div>
     <div id="revcon"></div>
   </div>
 </div>
 
 <script>
+/* ─── QUESTION DATA ─── */
 const QS=[
   {id:1,p:1,t:"銀行爰用「信用風險值」當作放款權限設置準則時，下列何者屬於無法反映的個別客戶風險？",o:["市場風險","違約風險","暴露風險","回收風險"],a:0},
   {id:2,p:1,t:"關於風險管理的組織運作方式，下列敘述何者錯誤？",o:["強調風險產生單位與監督單位宜相互隸屬","風險管理的決策過程，涵蓋「從上而下」與「由下往上」兩種","不論哪種風險均應詳細釐清前台、中台及後台的職掌，集中控制、分權營運","業務管理部門須定期評估所有營業單位的營業概況，包括不同業務的收支、利潤與風險承擔"],a:0},
@@ -184,69 +253,220 @@ const QS=[
   {id:60,p:2,t:"根據 2022 年起的法規，銀行的資本等級被劃分為「資本顯著不足」，表示此銀行：",o:["資本適足比率達 2%以上，但未達 8.5%","資本適足比率未達 2%","資本適足比率達 9%","資本適足比率達 10%"],a:0}
 ];
 
-let sqList=[],ua={},so={},ansCount=0,sub=false;
-function shuf(a){const r=[...a];for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]];}return r;}
+/* ─── STATE ─── */
+let sqList=[],ua={},so={},ansCount=0,corCount=0,errCount=0,curMode='all';
 
-function startQuiz(){
-  document.getElementById('ss').style.display='none';
-  document.getElementById('qs').style.display='block';
-  document.getElementById('rs').style.display='none';
-  sqList=shuf([...Array(60).keys()]).map(i=>QS[i]);
-  so={};ua={};ansCount=0;sub=false;
+/* ─── STORAGE ─── */
+function loadStars(){try{return JSON.parse(localStorage.getItem('rmq_stars')||'[]');}catch{return[];}}
+function saveStars(){try{localStorage.setItem('rmq_stars',JSON.stringify(starredIds));}catch{}}
+function loadWrong(){try{return JSON.parse(localStorage.getItem('rmq_wrong')||'[]');}catch{return[];}}
+function saveWrong(a){try{localStorage.setItem('rmq_wrong',JSON.stringify(a));}catch{}}
+
+let starredIds=loadStars();
+
+/* ─── UTILS ─── */
+function shuf(a){const r=[...a];for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]];}return r;}
+function $(id){return document.getElementById(id);}
+function hide(id){$(id).style.display='none';}
+function show(id,d='block'){$(id).style.display=d;}
+
+function toast(msg,ms=1900){
+  const t=$('toast');t.textContent=msg;t.classList.add('show');
+  clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),ms);
+}
+
+function refreshHome(){
+  const wi=loadWrong();
+  const rc=$('retry-card'),rd=$('retry-desc');
+  if(wi.length>0){rc.classList.remove('dim');rd.textContent=`上次錯了 ${wi.length} 題\n點此重練這些題目`;}
+  else{rc.classList.add('dim');rd.textContent='完成測驗後解鎖\n專攻上次錯誤題目';}
+  const sc=$('star-card'),sd=$('star-desc');
+  if(starredIds.length>0){sc.classList.remove('dim');sd.textContent=`已標記 ${starredIds.length} 題\n點此集中練習`;}
+  else{sc.classList.add('dim');sd.textContent='測驗中標記星號\n集中練習重點題';}
+}
+
+function goHome(){
+  hide('qs');hide('rs');show('ss');
+  refreshHome();window.scrollTo(0,0);
+}
+
+/* ─── START ─── */
+function startMode(mode){
+  let pool=[];
+  if(mode==='all') pool=[...QS];
+  else if(mode==='retry'){
+    const wi=loadWrong();
+    if(!wi.length){toast('沒有錯題紀錄！先完成一次完整測驗吧 😊');return;}
+    pool=QS.filter(q=>wi.includes(q.id));
+  } else if(mode==='star'){
+    if(!starredIds.length){toast('還沒有星號題目！先在測驗中標記吧 ⭐');return;}
+    pool=QS.filter(q=>starredIds.includes(q.id));
+  }
+  if(!pool.length){toast('沒有可用的題目');return;}
+
+  curMode=mode;sqList=shuf(pool);
+  so={};ua={};ansCount=0;corCount=0;errCount=0;
   sqList.forEach((_,qi)=>{so[qi]=shuf([0,1,2,3]);});
-  buildNav();buildQs();
+
+  hide('ss');hide('rs');show('qs');
+  const lbl={all:'完整測驗','retry':'🔁 錯題重練','star':'⭐ 星號題練習'};
+  $('mode-lbl').textContent='風險管理制度與實務　｜　'+lbl[mode];
+  $('btot').textContent=sqList.length;
+
+  const ba=$('badge-area');
+  if(mode==='star') ba.innerHTML=`<div class="mbadge star">⭐ 星號題模式 — ${sqList.length} 題</div>`;
+  else if(mode==='retry') ba.innerHTML=`<div class="mbadge retry">🔁 錯題重練模式 — ${sqList.length} 題</div>`;
+  else ba.innerHTML='';
+
+  buildNav();buildQs();updProg();
   window.scrollTo(0,0);
 }
 
+/* ─── BUILD NAV ─── */
 function buildNav(){
-  const c=document.getElementById('ndots');c.innerHTML='';
-  sqList.forEach((_,qi)=>{
+  const c=$('ndots');c.innerHTML='';
+  sqList.forEach((q,qi)=>{
     const d=document.createElement('div');
-    d.className='nd';d.id='nd'+qi;d.textContent=qi+1;
-    d.onclick=()=>document.getElementById('q'+qi).scrollIntoView({behavior:'smooth',block:'center'});
+    d.className='nd';d.id='nd'+qi;
+    refreshNd(d,qi,'');
+    d.onclick=()=>$('q'+qi).scrollIntoView({behavior:'smooth',block:'center'});
     c.appendChild(d);
   });
 }
+function refreshNd(el,qi,cls){
+  if(!el)el=$('nd'+qi);
+  const q=sqList[qi];
+  const starred=starredIds.includes(q.id);
+  el.className='nd'+(cls?' '+cls:'');
+  el.innerHTML=`${qi+1}${starred?'<span class="sd-dot">⭐</span>':''}`;
+}
 
+/* ─── BUILD QUESTIONS ─── */
 function buildQs(){
-  const c=document.getElementById('qcon');c.innerHTML='';
+  const c=$('qcon');c.innerHTML='';
   const lb=['(1)','(2)','(3)','(4)'];
+  let lastPart=-1;
   sqList.forEach((q,qi)=>{
-    const sc=q.p===1?'1.5分':'2分';const pt=q.p===1?'第一部分':'第二部分';
+    if(curMode==='all'&&q.p!==lastPart){
+      lastPart=q.p;
+      const d=document.createElement('div');
+      d.className='sdiv';
+      d.innerHTML=`<span>${q.p===1?'第一部分（第1–40題，每題1.5分）':'第二部分（第41–60題，每題2分）'}</span>`;
+      c.appendChild(d);
+    }
+    const sc=q.p===1?'1.5分':'2分';
+    const starred=starredIds.includes(q.id);
     let oh='';
     so[qi].forEach((oi,ni)=>{
       oh+=`<div class="opt" id="o${qi}_${ni}" onclick="pick(${qi},${ni})"><div class="ol">${lb[ni]}</div><div>${q.o[oi]}</div></div>`;
     });
     const card=document.createElement('div');
     card.className='qcard';card.id='q'+qi;
-    card.innerHTML=`<div class="qh"><div class="qn">第 ${qi+1} 題</div><div class="qs">${pt}｜${sc}</div><div class="qt">${q.t}</div></div><div class="opts">${oh}</div>`;
+    card.innerHTML=`
+      <div class="qh">
+        <div class="qn">第 ${qi+1} 題</div>
+        <div class="qpt">${curMode==='all'?(q.p===1?'Part1':'Part2')+'｜':''}${sc}</div>
+        <div class="qt">${q.t}</div>
+        <button class="sbtn${starred?' on':''}" id="sb${qi}" onclick="toggleStar(event,${qi})" title="標記/取消星號">⭐</button>
+      </div>
+      <div class="opts" id="opts${qi}">${oh}</div>
+      <div class="fb" id="fb${qi}"></div>
+    `;
     c.appendChild(card);
   });
 }
 
+/* ─── STAR TOGGLE ─── */
+function toggleStar(e,qi){
+  e.stopPropagation();
+  const q=sqList[qi];
+  const idx=starredIds.indexOf(q.id);
+  if(idx===-1){starredIds.push(q.id);toast('已加入星號 ⭐');}
+  else{starredIds.splice(idx,1);toast('已移除星號');}
+  saveStars();
+  const btn=$('sb'+qi);
+  btn.classList.toggle('on',starredIds.includes(q.id));
+  refreshNd(null,qi,ndClass(qi));
+}
+
+function ndClass(qi){
+  if(ua[qi]===undefined)return '';
+  return so[qi][ua[qi]]===sqList[qi].a?'ok':'err';
+}
+
+/* ─── PICK — INSTANT FEEDBACK ─── */
 function pick(qi,ni){
-  if(sub)return;
-  const was=ua[qi]!==undefined;
-  if(was)document.getElementById('o'+qi+'_'+ua[qi]).classList.remove('sel');
-  else ansCount++;
-  ua[qi]=ni;
-  document.getElementById('o'+qi+'_'+ni).classList.add('sel');
-  document.getElementById('nd'+qi).classList.add('cur');
-  upd();
+  if(ua[qi]!==undefined)return; // locked after first answer
+  ua[qi]=ni;ansCount++;
+  const q=sqList[qi];
+  const cni=so[qi].indexOf(q.a);
+  const ok=(ni===cni);
+
+  // Lock options
+  for(let i=0;i<4;i++)$('o'+qi+'_'+i).classList.add('dis');
+
+  if(ok){
+    $('o'+qi+'_'+ni).classList.add('cor');
+    corCount++;
+    $('q'+qi).classList.add('aok');
+    refreshNd(null,qi,'ok');
+  } else {
+    $('o'+qi+'_'+ni).classList.add('wrg');
+    $('o'+qi+'_'+cni).classList.add('shcor');
+    errCount++;
+    $('q'+qi).classList.add('aerr');
+    refreshNd(null,qi,'err');
+  }
+
+  // Feedback banner
+  const fb=$('fb'+qi);
+  if(ok){
+    fb.className='fb fok show';
+    fb.innerHTML='✅ 答對了！';
+  } else {
+    const lb=['(1)','(2)','(3)','(4)'];
+    fb.className='fb ferr show';
+    fb.innerHTML=`❌ 答錯！正確答案：<strong>${lb[cni]} ${q.o[so[qi][cni]]}</strong>`;
+  }
+
+  updProg();
+  // Auto-advance to next unanswered
+  setTimeout(()=>{
+    for(let i=qi+1;i<sqList.length;i++){
+      if(ua[i]===undefined){$('q'+i).scrollIntoView({behavior:'smooth',block:'center'});return;}
+    }
+  },650);
 }
 
-function upd(){
-  const p=(ansCount/60*100).toFixed(0);
-  document.getElementById('pb').style.width=p+'%';
-  document.getElementById('pl').textContent=`已作答 ${ansCount} / 60 題`;
-  document.getElementById('ba').textContent=ansCount;
+/* ─── PROGRESS ─── */
+function updProg(){
+  const total=sqList.length;
+  const pct=(ansCount/total*100).toFixed(0);
+  $('pb').style.width=pct+'%';
+  $('pl').textContent=`已作答 ${ansCount} / ${total} 題`;
+  $('ba').textContent=ansCount;
+  $('bco').textContent=corCount;
+  $('ber').textContent=errCount;
+  if(curMode==='all'){
+    let tot=0;
+    sqList.forEach((q,qi)=>{if(ua[qi]!==undefined&&so[qi][ua[qi]]===q.a)tot+=q.p===1?1.5:2;});
+    $('pr').textContent=`得分 ${tot.toFixed(1)} 分`;
+  } else {
+    $('pr').textContent=`✅${corCount} ❌${errCount}`;
+  }
 }
 
+/* ─── JUMP HELPERS ─── */
 function jumpUnanswered(){
-  for(let i=0;i<60;i++){if(ua[i]===undefined){document.getElementById('q'+i).scrollIntoView({behavior:'smooth',block:'center'});return;}}
-  alert('所有題目已作答！可以交卷了。');
+  for(let i=0;i<sqList.length;i++){if(ua[i]===undefined){$('q'+i).scrollIntoView({behavior:'smooth',block:'center'});return;}}
+  toast('所有題目已作答！可以結束測驗了 🎉');
+}
+function jumpStarred(){
+  for(let i=0;i<sqList.length;i++){if(starredIds.includes(sqList[i].id)){$('q'+i).scrollIntoView({behavior:'smooth',block:'center'});return;}}
+  toast('目前沒有星號題目');
 }
 
+/* ─── FINISH ─── */
 function calcScore(){
   let tot=0,cor=0,wrg=0,blk=0;
   sqList.forEach((q,qi)=>{
@@ -258,74 +478,92 @@ function calcScore(){
   return{tot,cor,wrg,blk};
 }
 
-function submitQuiz(){
-  const un=60-ansCount;
-  if(un>0){if(!confirm(`您還有 ${un} 題未作答，確定要交卷嗎？`))return;}
-  else if(!confirm('確定要交卷嗎？'))return;
-  sub=true;
+function finishQuiz(){
+  const un=sqList.length-ansCount;
+  if(un>0){if(!confirm(`還有 ${un} 題未作答，確定結束測驗嗎？`))return;}
+  else if(!confirm('確定結束測驗嗎？'))return;
+
+  // Reveal unanswered
   sqList.forEach((q,qi)=>{
-    const cni=so[qi].indexOf(q.a);
-    for(let ni=0;ni<4;ni++)document.getElementById('o'+qi+'_'+ni).classList.add('dis');
-    if(ua[qi]!==undefined){
-      const chn=ua[qi];
-      if(so[qi][chn]===q.a){
-        const el=document.getElementById('o'+qi+'_'+chn);el.classList.remove('sel');el.classList.add('cor');
-        document.getElementById('nd'+qi).className='nd ok';
-      } else {
-        const el=document.getElementById('o'+qi+'_'+chn);el.classList.remove('sel');el.classList.add('wrg');
-        document.getElementById('o'+qi+'_'+cni).classList.add('shcor');
-        document.getElementById('nd'+qi).className='nd err';
-      }
-    } else {
-      document.getElementById('o'+qi+'_'+cni).classList.add('shcor');
-      document.getElementById('nd'+qi).className='nd err';
+    if(ua[qi]===undefined){
+      const cni=so[qi].indexOf(q.a);
+      for(let i=0;i<4;i++)$('o'+qi+'_'+i).classList.add('dis');
+      $('o'+qi+'_'+cni).classList.add('shcor');
+      refreshNd(null,qi,'err');
     }
   });
+
   const r=calcScore();
-  document.getElementById('pr').textContent=`得分 ${r.tot.toFixed(1)} 分`;
+
+  // Save wrong IDs for 'all' mode
+  if(curMode==='all'){
+    const wids=sqList.filter((q,qi)=>ua[qi]===undefined||so[qi][ua[qi]]!==q.a).map(q=>q.id);
+    saveWrong(wids);
+  }
+
   setTimeout(()=>{
-    document.getElementById('qs').style.display='none';
-    const rsel=document.getElementById('rs');rsel.style.display='block';
-    document.getElementById('rsn').textContent=r.tot.toFixed(1);
-    const passed=r.tot>=60;
-    document.getElementById('rc').className='rc '+(passed?'pass':'fail');
-    document.getElementById('rt').textContent=passed?'🎉 恭喜通過測驗！':'📚 繼續加油！';
-    document.getElementById('rc2').textContent=r.cor;
-    document.getElementById('rw').textContent=r.wrg;
-    document.getElementById('rb').textContent=r.blk;
+    hide('qs');show('rs');
+    const isAll=curMode==='all';
+    $('rsub').textContent=isAll?'分':'題答對';
+    if(isAll){
+      $('rsn').textContent=r.tot.toFixed(1);
+      const passed=r.tot>=60;
+      $('rc').className='rc '+(passed?'pass':'fail');
+      $('rt').textContent=passed?'🎉 恭喜通過測驗！':'📚 繼續加油！';
+      $('rlbl').textContent='完整測驗 60 題';
+      $('retry-btn').style.display=r.wrg+r.blk>0?'inline-block':'none';
+    } else {
+      $('rsn').textContent=`${r.cor}/${sqList.length}`;
+      $('rc').className='rc '+(r.cor===sqList.length?'pass':'fail');
+      $('rt').textContent=r.cor===sqList.length?'🎉 全部答對！':'再接再厲 💪';
+      $('rlbl').textContent=curMode==='retry'?`錯題重練 ${sqList.length} 題`:`⭐ 星號題練習 ${sqList.length} 題`;
+      $('retry-btn').style.display='none';
+    }
+    $('rc2').textContent=r.cor;
+    $('rw').textContent=r.wrg;
+    $('rb').textContent=r.blk;
     window.scrollTo(0,0);
-  },400);
+  },280);
 }
 
+/* ─── REVIEW ─── */
 function toggleReview(){
-  const d=document.getElementById('revdiv');
+  const d=$('revdiv');
   if(d.classList.contains('show')){d.classList.remove('show');return;}
   d.classList.add('show');
-  const c=document.getElementById('revcon');c.innerHTML='';
+  const c=$('revcon');c.innerHTML='';
   const lb=['(1)','(2)','(3)','(4)'];
   sqList.forEach((q,qi)=>{
     const cni=so[qi].indexOf(q.a);
     const chn=ua[qi];
-    const pts=q.p===1?1.5:2;
+    const pts=q.p===1?'1.5分':'2分';
     let st='⬜ 未作答',stc='#94a3b8';
     if(chn!==undefined){if(so[qi][chn]===q.a){st='✅ 正確';stc='#22c55e';}else{st='❌ 錯誤';stc='#ef4444';}}
+    const starred=starredIds.includes(q.id);
     let oh=so[qi].map((oi,ni)=>{
       let s='color:#64748b',m='';
-      if(ni===cni){s='color:#86efac;font-weight:600';m=' ✓';}
+      if(ni===cni){s='color:#86efac;font-weight:700';m=' ✓';}
       if(ni===chn&&so[qi][chn]!==q.a){s='color:#fca5a5;text-decoration:line-through';m=' ✗';}
-      return`<div style="${s};font-size:.82rem;margin:3px 0">${lb[ni]} ${q.o[oi]}${m}</div>`;
+      return`<div style="${s};font-size:.81rem;margin:3px 0">${lb[ni]} ${q.o[oi]}${m}</div>`;
     }).join('');
     const card=document.createElement('div');
-    card.style.cssText='background:#1e293b;border:1px solid #334155;border-radius:11px;padding:14px;margin-bottom:10px';
-    card.innerHTML=`<div style="display:flex;gap:6px;align-items:flex-start;margin-bottom:9px;flex-wrap:wrap"><span style="background:#1d4ed8;color:#fff;padding:2px 7px;border-radius:4px;font-size:.67rem;font-weight:700">第${qi+1}題（原第${q.id}題）</span><span style="background:#0f172a;color:#67e8f9;font-size:.67rem;padding:2px 6px;border-radius:4px">${pts}分</span><span style="background:#0f172a;font-size:.68rem;padding:2px 6px;border-radius:4px;color:${stc}">${st}</span><div style="font-size:.87rem;color:#e2e8f0;flex:1;line-height:1.65;min-width:180px">${q.t}</div></div>${oh}`;
+    card.className='rcard';
+    card.innerHTML=`
+      <div class="rch">
+        <span style="background:#1d4ed8;color:#fff;padding:2px 7px;border-radius:4px;font-size:.66rem;font-weight:700">第${qi+1}題</span>
+        ${curMode==='all'?`<span style="background:#0f172a;color:#67e8f9;font-size:.66rem;padding:2px 6px;border-radius:4px">${pts}</span>`:''}
+        <span style="background:#0f172a;font-size:.67rem;padding:2px 6px;border-radius:4px;color:${stc}">${st}</span>
+        ${starred?'<span style="font-size:.75rem">⭐</span>':''}
+        <div style="font-size:.87rem;color:#e2e8f0;flex:1;line-height:1.65;min-width:160px">${q.t}</div>
+      </div>
+      ${oh}
+    `;
     c.appendChild(card);
   });
 }
 
-function restartQuiz(){
-  document.getElementById('revdiv').classList.remove('show');
-  startQuiz();
-}
+/* ─── INIT ─── */
+refreshHome();
 </script>
 </body>
 </html>
